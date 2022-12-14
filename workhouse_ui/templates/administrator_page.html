@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Success page{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height: 300px; 
+}
+
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+</head>
+<body>
+    <a href="/homepage">Log out</a>
+<h2>Administration</h2>
+
+<div class="row">
+  <div class="column" style="background-color:#aaa;">
+    <h2>Create new worker</h2>
+    <form action="" name="new_worker" method="">
+        <input type="text" name="name" placeholder="enter worker's name">
+        <br>
+        <p>Worker's worktime</p>
+        <input type="time" name="work_start_time" placeholder="enter start time">
+        <br>
+        <br>
+        <input type="time" name="work_end_time" placeholder="enter end time">
+        <br>
+        <br>
+        <button type="submit" formaction="{% url 'create_worker' %}">Create worker</button>  
+  </div>
+
+  <div class="column" style="background-color:#bbb;">
+    <h2>Create new location</h2>
+    <form action="" name="new_location" method="">
+        <input type="text" name="lable" placeholder="enter location's label">
+        <br>
+        <br>
+        <button type="submit" formaction="{% url 'create_location' %}">Create location</button>
+  </div>
+</div>
+    <br>
+    <br>
+    <button type="button" onclick="window.location.href='/homepage'">Schedule</button>
+    <br>
+    <br>
+    <button type="button" onclick="window.location.href='/workers'">All workers</button>
+    <br>
+    <br>
+    <button type="button" onclick="window.location.href='/locations'">All locations</button>
+</body>
+</html>
+
+
+
+{% endblock %}

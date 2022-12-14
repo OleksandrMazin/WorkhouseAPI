@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Registration{% endblock %}
+
+{% block content %}
+
+<a href="/login_page">Log In</a>
+
+<h1>Registration</h1>
+<form action="{% url 'register' %}" method="">
+    <input type="text" name="name" placeholder="enter your name">
+    <br>
+    <br>
+    <input type="text" name="email" placeholder="enter your email">
+    <br>
+    <br>
+    <input type="text" name="password" placeholder="enter password">
+    <br>
+    <br>
+    <input type="radio" name="position" value="Manager">
+    <label for="html">Manager</label>
+    <br>
+    <input type="radio" name="position" value="Administrator">
+    <label for="html">Administrator</label>
+    <br>
+    <br>
+    <button type="submit">Finish registration</button>
+
+</form>
+{% endblock %}
