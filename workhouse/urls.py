@@ -15,10 +15,13 @@ urlpatterns = [
     path('login_page/', UIView.log_in_page, name='login_page'),
     path('login/', UIView.log_in, name='login'),
     path('administrator_page/', UIView.admin_page, name='admin_page'),
+    # path('manager_page/'),
     path('create_worker/', UIView.create_worker, name='create_worker'),
     path('workers/', UIView.get_workers_list, name='get_workers'),
     path('locations/', UIView.get_location_list, name='locations'),
     path('create_location/', UIView.create_location, name='create_location'),
+    path('schedule/', UIView.get_schedule, name='schedule'),
+    path('create_appointment/', UIView.create_appointment, name='create_appointment'),
     
     path('success/', UIView.success_page, name='success'),
 

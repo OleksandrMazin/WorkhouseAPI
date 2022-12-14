@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Schedule{% endblock %}
+{% block content %}
+
+<body>
+    <h3> Schedule</h3>
+    {% for elem in Schedule %}
+    <p> {{ elem }}</p>
+    {% endfor %}
+
+</body>
+{% endblock %}

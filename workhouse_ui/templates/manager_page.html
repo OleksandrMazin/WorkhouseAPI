@@ -1,10 +1,42 @@
 {% extends "base.html" %}
-{% block title %}Success page{% endblock %}
+{% block title %}Manager Page{% endblock %}
 
 {% block content %}
 <body>
     <a href="/homepage">Log out</a>
+<h1>Manager page</h1>
+<p>New apointment</p>
+<form action="{% url 'homepage' %}" method="">
+    <input type="text" name="client_name" placeholder="enter client's name">
+    <br>
+    <br>
+    <input type="text" name="client_phone" placeholder="enter client's phone">
+    <br>
+    <br>
+    <input type="text" name="worker" placeholder="choose worker">
+    <br>
+    <br>
+    <input type="text" name="location" placeholder="enter server">
+    <br>
+    <br>
+    <input type="text" name="work" placeholder="enter server">
+    <br>
+    <br>
+    <input type="date" name="date" placeholder="enter server">
+    <br>
+    <br>
+    <input type="time" name="time" placeholder="enter server">
+    <br>
+    <br>
+    <button type="submit">New appointment</button>
+    <br>
+    <br>
+    <button type="button" onclick="window.location.href='/schedule'">Schedule</button>
+    <br>
+    <br>
+    <button type="button" onclick="window.location.href='/workers'">All workers</button>
+    <br>
+    <br>
+    <button type="button" onclick="window.location.href='/locations'">All locations</button>
 </body>
-<h1>This is manager page</h1>
-
 {% endblock %}

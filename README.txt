@@ -1,6 +1,6 @@
 WorkhouseAPI
 
-Learning how to work with APIs on the example of an abstract place in which various professionals perform their work for clients. TechStack: Python 3.8.10, django 4.1.4, djangorestframework 3.14.0, PostgreSQL.
+Learning how to work with APIs on the example of an abstract place in which various professionals perform their work for clients. TechStack: Python 3.8.10, django 4.1.4, djangorestframework 3.14.0, PostgreSQL (psycopg2).
 
 The main possibilities:
 

@@ -3,7 +3,9 @@ from django.shortcuts import render
 import requests
 import worker_api.models as APIModels
 import worker_api.serializers as APISerializers
+from worker_api.views import ScheduleAPIView
 
+import workhouse_ui.queries as q
 
 def registration_page(request):
     return render(request, 'registration.html')
@@ -49,6 +51,8 @@ def log_in(request):
         if user['name'] == name and user['password'] == password:
             if user['cat_id'] == 1:
                 return render(request, 'administrator_page.html')
+            if user['cat_id'] == 2:
+                return render(request, 'manager_page.html')
     return render(request, 'error.html')
         
 
@@ -58,18 +62,17 @@ def admin_page(request):
 
 def get_workers_list(request):
     workers = APIModels.Worker.objects.all()
-    return render(request, 'workers.html',context={'Workers': APISerializers.WorkersSerializer(workers, many=True).data})
+    return render(request, 'workers.html', context={'Workers': APISerializers.WorkersSerializer(workers, many=True).data})
+    # return render(request, 'workers.html', context={'Workers': q.get_workers()})
 
 
 
 def create_worker(request):
 
-    new_worker = APIModels.Worker.objects.create(
+    APIModels.Worker.objects.create(
         name = request.GET['name'],
         work_start_time = request.GET['work_start_time'],
-        work_end_time = request.GET['work_end_time']
-    )
-
+        work_end_time = request.GET['work_end_time'])
     return render(request, 'success_page.html')
 
 
@@ -85,6 +88,26 @@ def create_location(request):
     return render(request, 'success_page.html')
 
     
+def get_schedule(request):
+    schedule = ScheduleAPIView()
+    return render(request, 'schedule.html', context=schedule.get_shedule())
+
+
+def create_appointment(request):
+    APIModels.Appointment.objects.create(
+        client_name = request.GET['client_name'],
+        client_phone = request.GET['client_phone'],
+        worker = request.GET['worker'],
+        location = request.GET['location'],
+        work = request.GET['work'],
+        date = request.GET['date'],
+        time = request.GET['time']
+    )
+    return render(request, 'success_page.html', context={'worker': APIModels.Worker.objects.all() }) 
+
+
+# def manager_page(request):
+#     return render(request, 'manager_page.html')
 
 def success_page(request):
     return render(request, 'success_page.html')
