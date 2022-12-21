@@ -22,3 +22,8 @@ TODO things:
     Registration of new records into the schedule.
     Filtration of the schedule to simplify the search.
     Upgrade fron-end part.
+
+
+UPDATE 22.12.22
+Simplified models and serializers and views code in user_api
+Added URL router to simplify paths in url.py

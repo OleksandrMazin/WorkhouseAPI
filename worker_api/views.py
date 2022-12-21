@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import generics
+from rest_framework import generics, viewsets
 from rest_framework.response import Response
 from django.db import connection
 import datetime
@@ -9,85 +9,28 @@ import worker_api.serializers as Serial
 
 
 
-class WorkersAPIView(generics.ListAPIView):
-    def get(self, request):
-        workers = Worker.objects.all()
-        return Response({'Workers': Serial.WorkersSerializer(workers, many=True).data})
-
-    def post(self, request):
-
-        serializer = Serial.WorkersSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        new_worker = Worker.objects.create(
-            name = request.data['name'],
-            work_start_time = request.data['work_start_time'],
-            work_end_time = request.data['work_end_time']
-        )
-
-        return Response({'post': Serial.WorkersSerializer(new_worker).data})
+class WorkersAPIView(viewsets.ModelViewSet):
+    queryset = Worker.objects.all()
+    serializer_class = Serial.WorkersSerializer
 
 
 class WorksAPIView(generics.ListAPIView):
-    def get(self, request):
-        works = Work.objects.all()
-        return Response({'Works': Serial.WorksSerializer(works, many=True).data})
-
-    def post(self, request):
-
-        serializer = Serial.WorksSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        new_work = Work.objects.create(
-            title = request.data['title'],
-            duration = request.data['duration']
-        )
-
-        return Response({'post': Serial.WorksSerializer(new_work).data})
+    queryset = Work.objects.all()
+    serializer_class = Serial.WorksSerializer
 
 
 class LocationAPIView(generics.ListAPIView):
-    def get(self, request):
-        locations = Location.objects.all()
-        return Response({'Locations': Serial.LocationsSerializer(locations, many=True).data})
-
-    def post(self, request):
-    
-        serializer = Serial.LocationsSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        new_work = Location.objects.create(
-            lable = request.data['lable'],
-        )
-
-        return Response({'post': Serial.LocationsSerializer(new_work).data})
+    queryset = Location.objects.all()
+    serializer_class = Serial.LocationsSerializer
 
 
 class AppointmentsAPIView(generics.ListAPIView):
-    def get(self, request):
-        appointments = Appointment.objects.all()
-        return Response({'Appointments': Serial.AppointmentsSerializer(appointments, many=True).data})
-
-    def post(self, request):
-
-        serializer = Serial.AppointmentsSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        new_appointment = Appointment.objects.create(
-            client_name = request.data['client_name'],
-            client_phone = request.data['client_phone'],
-            worker_id = request.data['worker_id'],
-            location_id = request.data['location_id'],
-            work_id = request.data['work_id'],
-            date = request.data['date'],
-            time = request.data['time']
-
-        )
-
-        return Response({'post': Serial.AppointmentsSerializer(new_appointment).data})
+    queryset = Appointment.objects.all()
+    serializer_class = Serial.AppointmentsSerializer
         
 
 class ScheduleAPIView(generics.ListAPIView):
+    serializer_class = Serial.ScheduleSerializer
     
     all_data = {'Schedule': []}
     with connection.cursor() as cursor:

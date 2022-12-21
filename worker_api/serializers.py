@@ -1,26 +1,26 @@
 from rest_framework import serializers
+from worker_api import models
 
 
-class WorkersSerializer(serializers.Serializer):
-    name = serializers.CharField(max_length=255)
-    work_start_time = serializers.TimeField()
-    work_end_time = serializers.TimeField()
+class WorkersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Worker
+        fields = "__all__"
 
-class WorksSerializer(serializers.Serializer):
-    title = serializers.CharField(max_length = 30)
-    duration = serializers.TimeField()
+class WorksSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Work
+        fields = "__all__"
 
-class LocationsSerializer(serializers.Serializer):
-    lable = serializers.CharField(max_length=255)
+class LocationsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Location
+        fields = "__all__"
 
-class AppointmentsSerializer(serializers.Serializer):
-    client_name = serializers.CharField(max_length=100)
-    client_phone = serializers.CharField(max_length=13)
-    worker_id = serializers.IntegerField()
-    location_id = serializers.IntegerField()
-    work_id = serializers.IntegerField()
-    date = serializers.DateField()
-    time = serializers.TimeField()
+class AppointmentsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Appointment
+        fields = "__all__"
 
 class ScheduleSerializer(serializers.Serializer):
     client_name = serializers.CharField(max_length=100)
