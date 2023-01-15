@@ -1,11 +1,10 @@
+import requests
 from django.shortcuts import render
 
-import requests
 import worker_api.models as APIModels
 import worker_api.serializers as APISerializers
 from worker_api.views import ScheduleAPIView
 
-import workhouse_ui.queries as q
 
 def registration_page(request):
     return render(request, 'registration.html')

@@ -1,23 +1,43 @@
 from rest_framework import serializers
 from worker_api import models
+import datetime
 
 
 class WorkersSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
     class Meta:
         model = models.Worker
         fields = "__all__"
 
 class WorksSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
     class Meta:
         model = models.Work
         fields = "__all__"
 
 class LocationsSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    
     class Meta:
         model = models.Location
         fields = "__all__"
 
 class AppointmentsSerializer(serializers.ModelSerializer):
+    def validate(self, data):
+        all_appointments = models.Appointment.objects.all()
+        for appointment in all_appointments:
+            if data['worker'] == appointment.worker:
+                if data['date'] == appointment.date:
+                    #TODO add whole time check
+                    if data['time'] == appointment.time or data['time'] == datetime.datetime.now():
+                        raise serializers.ValidationError({'time': 'this time is reserved'})
+        return data
+                
+
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
     class Meta:
         model = models.Appointment
         fields = "__all__"

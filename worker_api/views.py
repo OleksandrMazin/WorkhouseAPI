@@ -1,37 +1,37 @@
-from django.shortcuts import render
+from django.db import connection
 from rest_framework import generics, viewsets
 from rest_framework.response import Response
-from django.db import connection
-import datetime
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-from .models import Worker, Work, Location, Appointment
 import worker_api.serializers as Serial
 
+from .models import Appointment, Location, Work, Worker
 
 
 class WorkersAPIView(viewsets.ModelViewSet):
     queryset = Worker.objects.all()
     serializer_class = Serial.WorkersSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly, )
 
-
-class WorksAPIView(generics.ListAPIView):
+class WorksAPIView(viewsets.ModelViewSet):
     queryset = Work.objects.all()
     serializer_class = Serial.WorksSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly, )
 
-
-class LocationAPIView(generics.ListAPIView):
+class LocationAPIView(viewsets.ModelViewSet):
     queryset = Location.objects.all()
     serializer_class = Serial.LocationsSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly, )
 
-
-class AppointmentsAPIView(generics.ListAPIView):
+class AppointmentsAPIView(viewsets.ModelViewSet):
     queryset = Appointment.objects.all()
     serializer_class = Serial.AppointmentsSerializer
-        
+    permission_classes = (IsAuthenticatedOrReadOnly, )
 
 class ScheduleAPIView(generics.ListAPIView):
     serializer_class = Serial.ScheduleSerializer
-    
+    permission_classes = (IsAuthenticatedOrReadOnly, )
+
     all_data = {'Schedule': []}
     with connection.cursor() as cursor:
         cursor.execute("""SELECT client_name, client_phone, date, time, worker_api_location.lable,
@@ -52,7 +52,7 @@ class ScheduleAPIView(generics.ListAPIView):
             'worker': elem[5],
             'type_of_work': elem[6]
         }
-
+        
         all_data['Schedule'].append(record)
 
     def get(self, request):

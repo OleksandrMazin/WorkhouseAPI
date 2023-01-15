@@ -1,14 +1,15 @@
 from django.contrib import admin
-from django.urls import path, include
-
-import worker_api.views as WorkerAPI
-from user_api.views import UserAPI
-from workhouse_ui import views as UIView
+from django.urls import include, path
 from rest_framework import routers
 
+import worker_api.views as WorkerAPI
+from workhouse_ui import views as UIView
+
 router = routers.DefaultRouter()
-router.register(r'users', UserAPI)
 router.register(r'workers', WorkerAPI.WorkersAPIView)
+router.register(r'works', WorkerAPI.WorksAPIView)
+router.register(r'locations', WorkerAPI.LocationAPIView)
+router.register(r'appointments', WorkerAPI.AppointmentsAPIView)
 
 
 urlpatterns = [
@@ -30,9 +31,7 @@ urlpatterns = [
     
     path('success/', UIView.success_page, name='success'),
 
-    path('api/', include(router.urls)),
-    path('api/works/', WorkerAPI.WorksAPIView.as_view()),
-    path('api/locations/', WorkerAPI.LocationAPIView.as_view()),
-    path('api/appointments/', WorkerAPI.AppointmentsAPIView.as_view()),
+    path('api/', include(router.urls), name='api'),
     path('api/schedule/', WorkerAPI.ScheduleAPIView.as_view()),
+    path('api/auth/', include('rest_framework.urls')),
 ]

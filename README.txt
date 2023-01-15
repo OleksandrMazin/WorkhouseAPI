@@ -18,8 +18,7 @@ Done things:
 
 TODO things:
 
-    Complete registration, authentication and authorization with API, heshing passwords and JWT access.
-    Registration of new records into the schedule.
+    Registration of new records into the schedule. (done)
     Filtration of the schedule to simplify the search.
     Upgrade fron-end part.
 
@@ -27,3 +26,12 @@ TODO things:
 UPDATE 22.12.22
 Simplified models and serializers and views code in user_api
 Added URL router to simplify paths in url.py
+
+UPDATE 04.01.23
+Simplified API rotes in urls.py
+Added coments to some files
+
+UPDATE 15.01.23
+Added permissions
+Added token authentication
+Added part of appointment data verification
